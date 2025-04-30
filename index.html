@@ -27,33 +27,45 @@
     .priority-braindump { border-left: 4px solid #10b981; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <!-- Navigation -->
-  <nav class="bg-white shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="text-xl font-bold text-blue-600">TimeBlock</h1>
-      <div class="flex gap-4">
-        <a href="index.html" class="text-gray-600 hover:text-blue-600">Task</a>
-      </div>
-    </div>
-  </nav>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white rounded-xl shadow-md p-6 w-[1100px] flex gap-6">
+    
+    <!-- Task Section -->
+    <div class="w-[40%]">
+      <div class="bg-white shadow-md rounded-xl p-4 mb-4">
+        <p class="text-center text-gray-400 text-sm font-semibold">Add task here</p>
 
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="flex justify-between mb-6">
-        <button onclick="openAddModal()" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm flex items-center gap-2">
-          <span>Add Event</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-      <div class="flex gap-2">
-        <button id="filter-all" class="px-3 py-1 bg-blue-600 text-white rounded text-sm">All</button>
-        <button id="filter-primary" class="px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm">Primary</button>
-        <button id="filter-secondary" class="px-3 py-1 bg-red-100 text-red-800 rounded text-sm">Secondary</button>
-        <button id="filter-braindump" class="px-3 py-1 bg-green-100 text-green-800 rounded text-sm">Brain Dump</button>
-      </div>
-    </div>
+        <div class="mt-4 space-y-3">
+          <!-- Task Blocks -->
+          <div class="space-y-3">
+            <!-- Task Input Template -->
+            <div class="bg-blue-500 rounded-md text-white font-bold text-sm">
+              <div class="flex justify-between items-center p-4 cursor-pointer" onclick="toggleInput('top')">
+                Top task <span class="text-xl font-bold">+</span>
+              </div>
+              <div id="input-top" class="hidden p-2 bg-blue-100 text-black">
+                <input type="text" id="task-top" class="w-full p-1 rounded mb-2" placeholder="Enter top task">
+                <select id="time-top" class="w-full p-1 rounded mb-2 bg-white">
+                  <option value="">Select time</option>
+                  <!-- Time options -->
+                  <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                      const times = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`);
+                      ['top', 'secondary', 'brain'].forEach(id => {
+                        const select = document.getElementById(`time-${id}`);
+                        times.forEach(time => {
+                          const option = document.createElement('option');
+                          option.value = time;
+                          option.textContent = time;
+                          select.appendChild(option);
+                        });
+                      });
+                    });
+                  </script>
+                </select>
+                <button onclick="saveTask('top')" class="bg-blue-600 text-white px-2 py-1 rounded">Save</button>
+              </div>
+            </div>
 
     <!-- Loading State -->
     <div id="loading-state" class="flex flex-col items-center justify-center py-12">
